@@ -4,10 +4,12 @@
     <title>Create Item</title> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
 </head>
 <body>
-<h2>Show Item</h2>
-<table>
+<div class="container">
+    <h2>Show Item</h2>
+<table class="table table-bordered">
     <tr>
         <td>Item Name</td>
         <td th:text="${item.nomenclature}">Item Name</td>
@@ -21,6 +23,7 @@
         <td th:text="${item.material}">Item Material</td>
     </tr>
 </table>
+<a href="/items-gui/list" class="btn btn-secondary">Back to List</a>
 
 <h3>Produktstruktur:</h3>
 <div class="tree">
@@ -35,5 +38,6 @@
     </div>
 </div>
 
+</div>
 </body>
 </html>

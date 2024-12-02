@@ -3,10 +3,14 @@
 <head> 
     <title>Create Item</title> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"/>
 </head>
 <body>
 <h2>List Items</h2>
-<table>
+<table id="itemsTable" class="display">
     <tr>
         <td>Name</td>
         <td>Description</td>
@@ -23,5 +27,15 @@
 
     </tr>
 </table>
+<script>
+    $(document).ready(function() {
+        $('#itemsTable').DataTable({
+            "paging": true,
+            "searching": true,
+            "ordering": true,
+            "info": true
+        });
+    });
+</script>
 </body>
 </html>

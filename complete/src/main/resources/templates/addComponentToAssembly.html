@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Add Component to Assembly</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/css/styles.css" />
+</head>
+<body>
+    <div class="container">
+        <h2>Add Component to Assembly</h2>
+        <form method="post" th:action="@{/add-component}" class="form">
+            <div class="form-group">
+                <label for="assemblyId">Select Assembly</label>
+                <select name="assemblyId" id="assemblyId" class="form-control">
+                    <option th:each="assembly : ${assemblies}" 
+                            th:value="${assembly.id}" 
+                            th:text="${assembly.nomenclature}">Assembly Name</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="componentName">Component Name</label>
+                <input type="text" name="componentName" id="componentName" class="form-control" placeholder="Enter component name" required/>
+            </div>
+            <div class="form-group">
+                <label for="componentDescription">Component Description</label>
+                <input type="text" name="componentDescription" id="componentDescription" class="form-control" placeholder="Enter component description" required/>
+            </div>
+            <div class="form-group">
+                <label for="componentMaterial">Component Material</label>
+                <input type="text" name="componentMaterial" id="componentMaterial" class="form-control" placeholder="Enter component material" required/>
+            </div>
+            <div class="form-group">
+                <label for="usageString">Usage String</label>
+                <input type="text" name="usageString" id="usageString" class="form-control" placeholder="Enter usage string" required/>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add Component" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

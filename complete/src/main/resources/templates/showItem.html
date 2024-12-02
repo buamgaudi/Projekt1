@@ -22,6 +22,25 @@
     </tr>
 </table>
 
+<h3>Components:</h3>
+<table>
+    <tr>
+        <th>Component Name</th>
+        <th>Component Description</th>
+        <th>Component Material</th>
+        <th>Actions</th>
+    </tr>
+    <tr th:each="component : ${item.uses}">
+        <td th:text="${component.name}">Component Name</td>
+        <td th:text="${component.represents.description}">Component Description</td>
+        <td th:text="${component.represents.material}">Component Material</td>
+        <td>
+            <a th:href="@{/items-gui/{id}/remove-component(id=${item.id}, componentName=${component.name})}">Remove</a>
+            <a th:href="@{/items-gui/{id}/update-component(id=${item.id}, componentName=${component.name})}">Modify</a>
+        </td>
+    </tr>
+</table>
+
 <h3>Produktstruktur:</h3>
 <div class="tree">
     <div th:fragment="treeviewItem(item)">

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import inginf.Item;
 
 import jakarta.servlet.http.HttpSession;
@@ -24,6 +26,22 @@ public class ItemController {
         if (_AppStore == null)
             _AppStore = context.getBean(AppStore.class);
         return _AppStore;
+    }
+
+    @DeleteMapping("/items-gui/{id}/remove-component")
+    public String removeComponentFromItem(
+        @PathVariable int id,
+        @RequestParam("componentName") String componentName,
+        Model model) 
+    {
+        Item item = getAppStore().getItemStore().stream()
+            .filter(i -> i.Id == id)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Item not found"));
+
+        item.removeComponent(componentName);
+        model.addAttribute("id", id);
+        return "componentRemoved";
     }
 
     @PostMapping("/items-gui")
@@ -84,5 +102,47 @@ public class ItemController {
                 break;
             }
         return "showItem";
+    }
+
+    @PostMapping("/items-gui/{id}/add-component")
+    public String addComponentToItem(
+        @PathVariable int id,
+        @RequestParam Map<String, String> body,
+        Model model) 
+    {
+        Item item = getAppStore().getItemStore().stream()
+            .filter(i -> i.Id == id)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Item not found"));
+
+        ItemInstance component = new ItemInstance(
+            body.get("Name"),
+            new Item(body.get("Nomenclature"), body.get("Description"), body.get("Material"))
+        );
+
+        item.addComponent(component);
+        model.addAttribute("id", id);
+        return "componentAdded";
+    }
+
+    @PutMapping("/items-gui/{id}/update-component")
+    public String updateComponentInItem(
+        @PathVariable int id,
+        @RequestParam Map<String, String> body,
+        Model model) 
+    {
+        Item item = getAppStore().getItemStore().stream()
+            .filter(i -> i.Id == id)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Item not found"));
+
+        ItemInstance component = new ItemInstance(
+            body.get("Name"),
+            new Item(body.get("Nomenclature"), body.get("Description"), body.get("Material"))
+        );
+
+        item.updateComponent(component);
+        model.addAttribute("id", id);
+        return "componentUpdated";
     }
 }

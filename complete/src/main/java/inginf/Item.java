@@ -11,6 +11,11 @@ public class Item {
         if (component == null) {
             throw new IllegalArgumentException("Component must not be null");
         }
+        for (ItemInstance existingComponent : Uses) {
+            if (existingComponent.getName().equals(component.getName())) {
+                throw new IllegalArgumentException("Component already exists");
+            }
+        }
         Uses.add(component);
     }
 
@@ -21,6 +26,19 @@ public class Item {
         for (int i = 0; i < Uses.size(); i++) {
             if (Uses.get(i).getName().equals(component.getName())) {
                 Uses.set(i, component);
+                return;
+            }
+        }
+        throw new IllegalArgumentException("Component not found in the list");
+    }
+
+    public void removeComponent(String componentName) {
+        if (componentName == null || componentName.isEmpty()) {
+            throw new IllegalArgumentException("Component name must not be null or empty");
+        }
+        for (int i = 0; i < Uses.size(); i++) {
+            if (Uses.get(i).getName().equals(componentName)) {
+                Uses.remove(i);
                 return;
             }
         }

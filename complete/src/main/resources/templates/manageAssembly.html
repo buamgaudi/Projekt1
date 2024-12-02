@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manage Assembly</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+    <h2>Manage Assembly</h2>
+
+    <!-- Form to add a new component -->
+    <h3>Add New Component</h3>
+    <form method="post" th:action="@{/items-gui/{id}/add-component(id=${item.id})}">
+        <table>
+            <tr>
+                <td>Component Name</td>
+                <td><input type="text" name="componentName" required/></td>
+            </tr>
+            <tr>
+                <td>Component Description</td>
+                <td><input type="text" name="componentDescription" required/></td>
+            </tr>
+            <tr>
+                <td>Component Material</td>
+                <td><input type="text" name="componentMaterial" required/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Add Component"/></td>
+            </tr>
+        </table>
+    </form>
+
+    <!-- List of existing components -->
+    <h3>Existing Components</h3>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Material</th>
+            <th>Actions</th>
+        </tr>
+        <tr th:each="component : ${item.uses}">
+            <td th:text="${component.name}">Component Name</td>
+            <td th:text="${component.represents.description}">Component Description</td>
+            <td th:text="${component.represents.material}">Component Material</td>
+            <td>
+                <a th:href="@{/items-gui/{id}/remove-component(id=${item.id}, componentName=${component.name})}">Remove</a>
+                <a th:href="@{/items-gui/{id}/update-component(id=${item.id}, componentName=${component.name})}">Update</a>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

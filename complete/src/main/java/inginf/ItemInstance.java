@@ -3,6 +3,16 @@ import java.util.ArrayList;
 public class ItemInstance {
 
     String Name;
+    String usageString;
+
+    public String getUsageString() {
+        return usageString;
+    }
+
+    public void setUsageString(String usageString) {
+        this.usageString = usageString;
+    }
+
     public String getName() {
         return Name;
     }
@@ -46,14 +56,19 @@ public class ItemInstance {
         return false;
     }
     public ItemInstance(String name, Item represents) {
+        this(name, represents, "");
+    }
+
+    public ItemInstance(String name, Item represents, String usageString) {
         setName(name);
         setRepresents(represents);
+        setUsageString(usageString);
     }
     public void printStructure(int inlineCount) {
         for (int i = 0; i < inlineCount; i++) {
             System.out.print("  ");
         }
-        System.out.println(Name + ":");
+        System.out.println(Name + " (" + usageString + "):");
         getRepresents().printStructure(inlineCount + 1);
     }
     public void printConfStructure(
@@ -61,7 +76,7 @@ public class ItemInstance {
         for (int i = 0; i < inlineCount; i++) {
             System.out.print("  ");
         }
-        System.out.println(Name + ":");
+        System.out.println(Name + " (" + usageString + "):");
         getRepresents().printConfStructure(
             configuration, inlineCount + 1);  
     }

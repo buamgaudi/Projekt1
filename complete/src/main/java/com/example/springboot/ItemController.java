@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import inginf.Item;
+import inginf.ItemInstance;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -84,5 +85,35 @@ public class ItemController {
                 break;
             }
         return "showItem";
+    }
+    @GetMapping("/add-component")
+    public String addComponentToAssemblyForm(Model model) {
+        model.addAttribute("assemblies", getAppStore().getItemStore());
+        return "addComponentToAssembly";
+    }
+
+    @PostMapping("/add-component")
+    public String addComponentToAssembly(
+        @RequestParam Map<String, String> body,
+        Model model) 
+    {
+        int assemblyId = Integer.parseInt(body.get("assemblyId"));
+        String componentName = body.get("componentName");
+        String componentDescription = body.get("componentDescription");
+        String componentMaterial = body.get("componentMaterial");
+        String usageString = body.get("usageString");
+
+        Item component = new Item(componentName, componentDescription, componentMaterial);
+        ItemInstance componentInstance = new ItemInstance(usageString, component);
+
+        for (Item assembly : getAppStore().getItemStore()) {
+            if (assembly.getId() == assemblyId) {
+                assembly.getUses().add(componentInstance);
+                break;
+            }
+        }
+
+        model.addAttribute("id", component.getId());
+        return "itemCreated";
     }
 }

@@ -12,7 +12,12 @@ public class Item {
     public Item() {
         
     }
-    
+
+    public void addComponent(Item component, String usageString) {
+        ItemInstance componentInstance = new ItemInstance(usageString, component);
+        Uses.add(componentInstance);
+    }
+
     String Nomenclature;
     public String getNomenclature() {
         return Nomenclature;

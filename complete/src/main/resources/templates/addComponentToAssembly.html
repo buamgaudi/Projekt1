@@ -1,0 +1,44 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Add Component to Assembly</title> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h2>Add Component to Assembly</h2>
+<form method="post" th:action="@{/add-component}">
+    <table>
+        <tr>
+            <td>Select Assembly</td>
+            <td>
+                <select name="assemblyId">
+                    <option th:each="assembly : ${assemblies}" 
+                            th:value="${assembly.id}" 
+                            th:text="${assembly.nomenclature}">Assembly Name</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Component Name</td>
+            <td><input type="text" name="componentName" required/></td>
+        </tr>
+        <tr>
+            <td>Component Description</td>
+            <td><input type="text" name="componentDescription" required/></td>
+        </tr>
+        <tr>
+            <td>Component Material</td>
+            <td><input type="text" name="componentMaterial" required/></td>
+        </tr>
+        <tr>
+            <td>Usage String</td>
+            <td><input type="text" name="usageString" required/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Add Component"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

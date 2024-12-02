@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import inginf.Item;
+import inginf.ItemInstance;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -24,6 +25,54 @@ public class ItemController {
         if (_AppStore == null)
             _AppStore = context.getBean(AppStore.class);
         return _AppStore;
+    }
+
+    @GetMapping("/assemblies-gui")
+    public String editAssemblies(Model model) {
+        model.addAttribute("assemblies", getAppStore().getItemStore());
+        return "editAssemblies";
+    }
+
+    @PostMapping("/assemblies-gui/addPart")
+    public String addPartToAssembly(
+        @RequestParam("assemblyId") int assemblyId,
+        @RequestParam("partName") String partName,
+        @RequestParam("partDescription") String partDescription,
+        @RequestParam("partMaterial") String partMaterial,
+        Model model) {
+        
+        Item assembly = getAppStore().getItemStore().stream()
+            .filter(item -> item.getId() == assemblyId)
+            .findFirst()
+            .orElse(null);
+
+        if (assembly != null) {
+            Item part = new Item(partName, partDescription, partMaterial);
+            ItemInstance partInstance = new ItemInstance(partName, part);
+            assembly.getUses().add(partInstance);
+        }
+
+        model.addAttribute("assemblies", getAppStore().getItemStore());
+        return "editAssemblies";
+    }
+
+    @PostMapping("/assemblies-gui/removePart")
+    public String removePartFromAssembly(
+        @RequestParam("assemblyId") int assemblyId,
+        @RequestParam("partId") int partId,
+        Model model) {
+        
+        Item assembly = getAppStore().getItemStore().stream()
+            .filter(item -> item.getId() == assemblyId)
+            .findFirst()
+            .orElse(null);
+
+        if (assembly != null) {
+            assembly.getUses().removeIf(partInstance -> partInstance.getRepresents().getId() == partId);
+        }
+
+        model.addAttribute("assemblies", getAppStore().getItemStore());
+        return "editAssemblies";
     }
 
     @PostMapping("/items-gui")

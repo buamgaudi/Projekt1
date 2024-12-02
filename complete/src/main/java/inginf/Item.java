@@ -12,6 +12,16 @@ public class Item {
     public Item() {
         
     }
+
+    public void addPart(ItemInstance part) {
+        if (part != null) {
+            Uses.add(part);
+        }
+    }
+
+    public boolean removePart(ItemInstance part) {
+        return Uses.remove(part);
+    }
     
     String Nomenclature;
     public String getNomenclature() {

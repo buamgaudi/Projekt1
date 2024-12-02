@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Assemblies</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+        .assembly {
+            margin-left: 20px;
+        }
+        .part {
+            margin-left: 40px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Edit Assemblies</h2>
+
+    <!-- Form to add a new part to an assembly -->
+    <h3>Add Part to Assembly</h3>
+    <form method="post" th:action="@{/assemblies-gui/addPart}">
+        <label for="assemblyId">Assembly ID:</label>
+        <input type="text" id="assemblyId" name="assemblyId" required />
+        <label for="partName">Part Name:</label>
+        <input type="text" id="partName" name="partName" required />
+        <label for="partDescription">Part Description:</label>
+        <input type="text" id="partDescription" name="partDescription" required />
+        <label for="partMaterial">Part Material:</label>
+        <input type="text" id="partMaterial" name="partMaterial" required />
+        <input type="submit" value="Add Part" />
+    </form>
+
+    <!-- Form to remove a part from an assembly -->
+    <h3>Remove Part from Assembly</h3>
+    <form method="post" th:action="@{/assemblies-gui/removePart}">
+        <label for="assemblyIdRemove">Assembly ID:</label>
+        <input type="text" id="assemblyIdRemove" name="assemblyId" required />
+        <label for="partId">Part ID:</label>
+        <input type="text" id="partId" name="partId" required />
+        <input type="submit" value="Remove Part" />
+    </form>
+
+    <!-- Display current list of assemblies and their parts -->
+    <h3>Current Assemblies and Parts</h3>
+    <div th:each="assembly : ${assemblies}">
+        <div class="assembly">
+            <strong th:text="${assembly.nomenclature}">Assembly Name</strong>
+            <ul>
+                <li th:each="part : ${assembly.uses}" class="part">
+                    <span th:text="${part.name}">Part Name</span> - 
+                    <span th:text="${part.description}">Part Description</span> - 
+                    <span th:text="${part.material}">Part Material</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

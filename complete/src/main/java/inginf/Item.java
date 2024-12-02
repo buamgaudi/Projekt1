@@ -14,13 +14,16 @@ public class Item {
     }
 
     public void addPart(ItemInstance part) {
-        if (part != null) {
+        if (part != null && !Uses.contains(part)) {
             Uses.add(part);
         }
     }
 
     public boolean removePart(ItemInstance part) {
-        return Uses.remove(part);
+        if (part != null && Uses.contains(part)) {
+            return Uses.remove(part);
+        }
+        return false;
     }
     
     String Nomenclature;

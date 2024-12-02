@@ -3,16 +3,15 @@
 <head> 
     <title>Create Item</title> 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-
+    <style>
+        .assembly {
+            margin-left: 20px;
+        }
+        .part {
+            margin-left: 40px;
+        }
+    </style>
 </head>
-<style>
-    .assembly {
-        margin-left: 20px;
-    }
-    .part {
-        margin-left: 40px;
-    }
-</style>
 <body>
 <h2>Show Item</h2>
 <table>
@@ -32,14 +31,18 @@
 
 <h3>Produktstruktur:</h3>
 <div class="tree">
-    <div th:fragment="treeviewItem(item)" class="assembly">
-        <span th:text="${item.nomenclature}">Item</span>
-        <ul th:if="${item.getUses().size() > 0}">            
-            <li th:each="child : ${item.getUses()}" class="part">
-                <i><span th:text="${child.name}">ItemInstance</span></i>                                
-                <div th:replace="this :: treeviewItem(${child.represents})"></div>
-            </li>
-        </ul>
+    <div th:fragment="treeviewItem(item)">
+        <div class="assembly">
+            <span th:text="${item.nomenclature}">Item</span>
+            <ul th:if="${item.getUses().size() > 0}">            
+                <li th:each="child : ${item.getUses()}">
+                    <div class="part">
+                        <i><span th:text="${child.name}">ItemInstance</span></i>                                
+                        <div th:replace="this :: treeviewItem(${child.represents})"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 

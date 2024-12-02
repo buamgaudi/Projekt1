@@ -6,6 +6,26 @@ public class Item {
     public int getId() {
         return Id;
     }
+
+    public void addComponent(ItemInstance component) {
+        if (component == null) {
+            throw new IllegalArgumentException("Component must not be null");
+        }
+        Uses.add(component);
+    }
+
+    public void updateComponent(ItemInstance component) {
+        if (component == null) {
+            throw new IllegalArgumentException("Component must not be null");
+        }
+        for (int i = 0; i < Uses.size(); i++) {
+            if (Uses.get(i).getName().equals(component.getName())) {
+                Uses.set(i, component);
+                return;
+            }
+        }
+        throw new IllegalArgumentException("Component not found in the list");
+    }
     public void setId(int id) {
         Id = id;
     }   

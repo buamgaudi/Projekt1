@@ -92,6 +92,36 @@ public class ItemRestController {
                 item.getDescription().contains(searchString)) {
                 matchingItems.add(item);
             }
+
+            @PostMapping("/items/{id}/add-component")
+            public Item addComponentToItem(
+                @PathVariable int id,
+                @RequestBody ItemInstance component) 
+            {
+                AppStore appStore = getItemStore();
+                Item item = appStore.getItemStore().stream()
+                    .filter(i -> i.Id == id)
+                    .findFirst()
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item not found"));
+        
+                item.addComponent(component);
+                return item;
+            }
+
+            @PutMapping("/items/{id}/update-component")
+            public Item updateComponentInItem(
+                @PathVariable int id,
+                @RequestBody ItemInstance component) 
+            {
+                AppStore appStore = getItemStore();
+                Item item = appStore.getItemStore().stream()
+                    .filter(i -> i.Id == id)
+                    .findFirst()
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Item not found"));
+        
+                item.updateComponent(component);
+                return item;
+            }
         }
         return matchingItems;
     }

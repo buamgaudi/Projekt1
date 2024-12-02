@@ -85,4 +85,46 @@ public class ItemController {
             }
         return "showItem";
     }
+
+    @PostMapping("/items-gui/{id}/add-component")
+    public String addComponentToItem(
+        @PathVariable int id,
+        @RequestParam Map<String, String> body,
+        Model model) 
+    {
+        Item item = getAppStore().getItemStore().stream()
+            .filter(i -> i.Id == id)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Item not found"));
+
+        ItemInstance component = new ItemInstance(
+            body.get("Name"),
+            new Item(body.get("Nomenclature"), body.get("Description"), body.get("Material"))
+        );
+
+        item.addComponent(component);
+        model.addAttribute("id", id);
+        return "componentAdded";
+    }
+
+    @PutMapping("/items-gui/{id}/update-component")
+    public String updateComponentInItem(
+        @PathVariable int id,
+        @RequestParam Map<String, String> body,
+        Model model) 
+    {
+        Item item = getAppStore().getItemStore().stream()
+            .filter(i -> i.Id == id)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Item not found"));
+
+        ItemInstance component = new ItemInstance(
+            body.get("Name"),
+            new Item(body.get("Nomenclature"), body.get("Description"), body.get("Material"))
+        );
+
+        item.updateComponent(component);
+        model.addAttribute("id", id);
+        return "componentUpdated";
+    }
 }

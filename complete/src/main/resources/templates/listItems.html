@@ -11,6 +11,7 @@
         <td>Name</td>
         <td>Description</td>
         <td>Material</td>
+        <td>Actions</td>
     </tr>
     <tr th:each="item : ${items}">
         <td th:text="${item.nomenclature}">Item Name</td>
@@ -21,6 +22,10 @@
         <td><a th:href="@{/items-gui/{id}/delete(id=${item.id})}">delete</a></td>
         <td><a th:href="@{/items-gui/{id}/show(id=${item.id})}">show</a></td>
 
+        <td>
+            <a th:href="@{/items-gui/{id}/add-component(id=${item.id})}">add component</a>
+            <a th:href="@{/items-gui/{id}/update-component(id=${item.id})}">modify component</a>
+        </td>
     </tr>
 </table>
 </body>

@@ -17,6 +17,14 @@
         <td th:text="${item.description}">Item Description</td>
         <td th:text="${item.material}">Item Material</td>      
         <td th:text="${item.id}"></td>  
+
+        <td>
+            <ul>
+                <li th:each="component : ${item.uses}">
+                    <span th:text="${component.represents.nomenclature}">Component Name</span>
+                </li>
+            </ul>
+        </td>
         
         <td><a th:href="@{/items-gui/{id}/delete(id=${item.id})}">delete</a></td>
         <td><a th:href="@{/items-gui/{id}/show(id=${item.id})}">show</a></td>

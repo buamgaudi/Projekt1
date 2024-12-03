@@ -19,8 +19,14 @@
             </td>
         </tr>
         <tr>
-            <td>Component Name</td>
-            <td><input type="text" name="componentName" required/></td>
+            <td>Select Component</td>
+            <td>
+                <select name="componentId">
+                    <option th:each="component : ${components}" 
+                            th:value="${component.id}" 
+                            th:text="${component.nomenclature}">Component Name</option>
+                </select>
+            </td>
         </tr>
         <tr>
             <td>Component Description</td>
